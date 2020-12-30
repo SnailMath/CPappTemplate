@@ -27,8 +27,21 @@ void println(const char str[],int a,int b,int c      );
 void println(const char str[],int a,int b,int c,int d);
 
 void delay(uint32_t time);
+void line(int x1, int y1, int x2, int y2, uint16_t color);
+void triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint16_t colorFill, uint16_t colorLine);
+void fillScreen(uint16_t color);
 
+#ifdef PC
+	inline void LCD_ClearScreen(){ fillScreen((uint16_t)0xFFFF);}
+#endif
+
+inline uint16_t color(uint8_t R, uint8_t G, uint8_t B){
+	return (((R<<8) & 0b1111100000000000) |
+			((G<<3) & 0b0000011111100000) |
+			((B>>3) & 0b0000000000011111));
+}
 inline void setPixel(int x,int y, uint32_t color){
+	if(x>=0 && x < width && y>=0 && y < height){
 	#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
@@ -40,8 +53,9 @@ inline void setPixel(int x,int y, uint32_t color){
 		rect.x = x; rect.y = y; rect.w =1; rect.h = 1;
 		SDL_UpdateTexture(texture, &rect , (void*)pixels, 4); //The last number defines the number of bytes per row. ( width * bytePerPixel )	
 	#else
-		*((uint16_t*)( (uint32_t)vram + ((320*y + x)*2)  )) = color;
+		*((uint16_t*)( (uint32_t)vram + ((width*y + x)*2)  )) = color;
 	#endif
+	}
 }
 
 
