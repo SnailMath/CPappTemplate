@@ -19,3 +19,6 @@ You can use these functions on both the calculator and the pc:
 | bool testKey(uint32_t key1, uint32_t key2, Keys2 key); | Tests if 'key' is pressed. See example in main.cpp |
 | void delay(uint32_t time); | Wait for `time`ms. (Only on the pc for now)|
 
+For platform dependand code use `#ifdef PC` for the PC version and `#ifndef PC` for the calculator version.
+
+This also works under Windows 10 with WSL2 and Xming.
