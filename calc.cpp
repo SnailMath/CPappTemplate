@@ -135,9 +135,9 @@ The triangle has three points P0, P1 and P2 and three lines a, b and c. We go fr
 */
 //Sort the points by x coordinate
 	{int z;
-	if(x0>x2){ z=x2; x2=x0; x0=z; z=y2; y2=x0; y0=z; }
-	if(x1>x2){ z=x2; x2=x1; x1=z; z=y2; y2=x1; y1=z; }
-	if(x0>x1){ z=x1; x1=x0; x0=z; z=y1; y1=x0; y0=z; }}
+	if(x0>x2){ z=x2; x2=x0; x0=z; z=y2; y2=y0; y0=z; }
+	if(x1>x2){ z=x2; x2=x1; x1=z; z=y2; y2=y1; y1=z; }
+	if(x0>x1){ z=x1; x1=x0; x0=z; z=y1; y1=y0; y0=z; }}
 
 	int x = x0; //x is the variable that counts from left to right
 
