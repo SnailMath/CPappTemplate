@@ -42,6 +42,9 @@ void main2(){
 		if(testKey(key1, key2, KEY_CLEAR)){ //Use testKey() to test if a specific key is pressed
 			break;
 		}
+		if(testKey(key1, key2, KEY_EXE)){ //Use testKey() to test if a specific key is pressed
+			break;
+		}
 	}
 
 }

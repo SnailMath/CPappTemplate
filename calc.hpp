@@ -8,12 +8,15 @@
 	extern SDL_Window *win;
 	extern SDL_Renderer *renderer;
 	extern SDL_Texture *texture;
+	extern int width;
+	extern int height;
 #else
 	#include <sdk/os/debug.hpp> //This contains stdint (uint32_t and so on)
 	#include <sdk/os/lcd.hpp>
+	#include <sdk/calc/calc.hpp> //a few functions from CPappTemplate got moved here...
 	#include <appdef.hpp>
-	extern "C" void getKey(uint32_t *key1, uint32_t *key2);
-	extern uint16_t *vram;
+	//extern "C" void getKey(uint32_t *key1, uint32_t *key2);
+	//extern uint16_t *vram;
 	extern uint8_t debugprintline;
 #endif
 
@@ -27,14 +30,19 @@ void println(const char str[],int a,int b,int c      );
 void println(const char str[],int a,int b,int c,int d);
 
 void delay(uint32_t time);
+
+//This is defined in sdk/calc/calc.cpp for the calculator.
+#ifdef PC
 void line(int x1, int y1, int x2, int y2, uint16_t color);
 void triangle(int x0, int y0, int x1, int y1, int x2, int y2, uint16_t colorFill, uint16_t colorLine);
 void fillScreen(uint16_t color);
+#endif
 
 #ifdef PC
 	inline void LCD_ClearScreen(){ fillScreen((uint16_t)0xFFFF);}
 #endif
 
+#ifdef PC
 inline uint16_t color(uint8_t R, uint8_t G, uint8_t B){
 	return (((R<<8) & 0b1111100000000000) |
 			((G<<3) & 0b0000011111100000) |
@@ -111,4 +119,4 @@ inline bool testKey(uint32_t key1, uint32_t key2, Keys2 key){
 	if (key2 & key) return true;
 	else return false;
 }
-
+#endif

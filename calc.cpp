@@ -7,12 +7,12 @@ extern void main2(); //in file main.cpp
 	SDL_Window *win;
 	SDL_Renderer *renderer;
 	SDL_Texture *texture;
+	int width;
+	int height;
 #else
-	uint16_t *vram;
+	//uint16_t *vram; //this got moved to sdk/calc/calc.hpp
 	uint8_t debugprintline = 0;
 #endif
-int width;
-int height;
 
 
 extern "C"
@@ -83,6 +83,8 @@ void delay(uint32_t time){
 	#endif	
 }
 
+//This is defined in sdk/calc/calc.cpp for the calc...
+#ifdef PC
 //Draw a line (bresanham line algorithm)
 void line(int x1, int y1, int x2, int y2, uint16_t color){
 	int8_t ix, iy;
@@ -206,7 +208,7 @@ void vline(int x, int y1, int y2, uint16_t color){
 }
 
 void fillScreen(uint16_t color){
-	#ifdef PC
+	//#ifdef PC
 		unsigned char pixels[4]; // { A, B, G, R }
 		//Convert 565 colors to RGBA
 		/*R*/ pixels[3] = (color >> 8) & 0b11111000;
@@ -225,15 +227,15 @@ void fillScreen(uint16_t color){
 		SDL_Rect rect;
 		rect.x = 0; rect.y = 0; rect.w =width; rect.h = height;
 		SDL_UpdateTexture(texture, &rect , (void*)screen, 4*width); //The last number defines the number of bytes per row. ( width * bytePerPixel )
-	#else
-		const uint32_t size = width * height;
-		for(uint32_t i = 0; i<size;i++)
-			*((uint16_t*)( (uint32_t)vram + ( i*2 )  )) = color;
-	#endif
+	//#else
+	//	const uint32_t size = width * height;
+	//	for(uint32_t i = 0; i<size;i++)
+	//		*((uint16_t*)( (uint32_t)vram + ( i*2 )  )) = color;
+	//#endif
 }
 
 //for the pc getKey is written in c++, for the calculator this is written in asm in the file getKey.s
-#ifdef PC
+//#ifdef PC
 
 //Add key to currently pressed keys (used in getKey on the pc)
 inline void setKey(uint32_t *key1, uint32_t *key2, Keys1 key) {
